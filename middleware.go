@@ -7,10 +7,10 @@ import (
 )
 
 func validateApiKey(c *fiber.Ctx) error {
-	keyName := GetEnvOrDefaultString("API_KEY_NAME", "some-api-key")
-	keyName = strings.ReplaceAll(keyName, "-", "_")
+	keyName := GetEnvOrDefaultString("API_KEY_NAME", "SOME_API_KEY")
 	keyValue := GetEnvOrDefaultString(keyName, "some-api-key-value")
-	reqKey := c.Get(keyName)
+	reqKeyName := strings.ReplaceAll(keyName, "_", "-")
+	reqKey := c.Get(reqKeyName)
 	if keyValue != reqKey {
 		c.Status(401)
 		return c.JSON(fiber.Map{
@@ -22,10 +22,10 @@ func validateApiKey(c *fiber.Ctx) error {
 }
 
 func validateSyncRajoKey(c *fiber.Ctx) error {
-	keyName := GetEnvOrDefaultString("SYNCRAJO_KEY_NAME", "some-syncrajo-key")
-	keyName = strings.ReplaceAll(keyName, "-", "_")
+	keyName := GetEnvOrDefaultString("SYNCRAJO_KEY_NAME", "SOME_SYNCRAJO_KEY")
 	keyValue := GetEnvOrDefaultString(keyName, "some-syncrajo-key-value")
-	reqKey := c.Get(keyName)
+	reqKeyName := strings.ReplaceAll(keyName, "_", "-")
+	reqKey := c.Get(reqKeyName)
 	if keyValue != reqKey {
 		c.Status(401)
 		return c.JSON(fiber.Map{
